@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Xml;
+
+namespace WindowsFormsApplication2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Mod_XML mod_1 = new Mod_XML();
+                mod_1.Cluster = comboBox1.Text;
+                mod_1.Block = comboBox2.Text;
+                mod_1.Module = comboBox3.Text;
+                mod_1.port_interface = comboBox4.Text;
+                mod_1.port_name = comboBox5.Text;
+                mod_1.port_width = comboBox6.Text;
+
+
+                string filepath;
+                SaveFileDialog save_1 = new SaveFileDialog();
+                save_1.Title = "choose";
+                save_1.Filter = "txt file(*.txt)|*.txt";
+                save_1.FilterIndex = 1;
+                save_1.RestoreDirectory = true;
+                if(save_1.ShowDialog()==DialogResult.OK)
+                {
+                    filepath = save_1.FileName.ToString();//get filepath
+                    if(File.Exists(filepath))
+                    {
+                       // FileStream fs_1 = new FileStream(filepath, FileMode.Create, FileAccess.Write);//create new file
+                        StreamWriter sw_1 = new StreamWriter(filepath,true,Encoding.ASCII);//true is append txt,false is cover
+                        //StreamWriter sw_1 = new StreamWriter(fs_1);  //this also works
+
+                        sw_1.WriteLine("module "+mod_1.Module+"("+"     //first line");  //writing value
+                        sw_1.Close();
+                       // fs_1.Close();
+
+                        MessageBox.Show("Saved Success");
+
+                    }
+                    else
+                    {
+                        FileStream fs_2 = new FileStream(filepath,FileMode.CreateNew, FileAccess.Write);
+                        //StreamWriter sw_2 = new StreamWriter(fs_2);
+                        StreamWriter sw_2 = new StreamWriter(fs_2,Encoding.ASCII);
+                        sw_2.WriteLine("//test_build//");
+                        sw_2.Close();
+                        fs_2.Close();
+                        MessageBox.Show("building");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("reloading");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("WARNING");
+            }
+
+        }
+    }
+}
