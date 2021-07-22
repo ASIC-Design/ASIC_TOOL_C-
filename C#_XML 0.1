@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+
+namespace WindowsFormsApplication2
+{
+    public partial class Mod_XML
+    {
+        public int id { get; set; }
+        public string Cluster { get; set; }
+        public string Block { get; set; }
+        public string Module { get; set; }
+        public string port_interface { get; set; }
+        public string port_name { get; set; }
+        public string port_width { get; set; }
+
+        public void GenerateXML(string filepath)
+        {
+            XmlDocument rootlist = new XmlDocument();
+
+            XmlElement elem0 = rootlist.CreateElement("rootlist");
+            rootlist.AppendChild(elem0);
+
+            XmlElement elem_id = rootlist.CreateElement("id");
+            elem_id.SetAttribute("id", Convert.ToString(id));
+            elem0.AppendChild(elem_id);
+
+            XmlElement elem_cluster = rootlist.CreateElement("Cluster");
+            elem_cluster.SetAttribute("Cluster", Cluster);
+            elem_id.AppendChild(elem_cluster);
+
+            XmlElement elem_block = rootlist.CreateElement("Block");
+            elem_block.SetAttribute("Block", Block);
+            elem_cluster.AppendChild(elem_block);
+
+            XmlElement elem_module = rootlist.CreateElement("Module");
+            elem_module.SetAttribute("Module", Module);
+            elem_block.AppendChild(elem_module);
+
+            XmlElement elem_interface = rootlist.CreateElement("port_interface");
+            elem_interface.SetAttribute("port_interface", port_interface);
+            elem_module.AppendChild(elem_interface);
+
+            XmlElement elem_p_name = rootlist.CreateElement("port_name");
+            elem_p_name.SetAttribute("port_name", port_name);
+            elem_module.AppendChild(elem_p_name);
+
+            XmlElement elem_p_width = rootlist.CreateElement("port_width");
+            elem_p_width.SetAttribute("port_width", port_width);
+            elem_module.AppendChild(elem_p_width);
+
+            rootlist.Save(filepath);
+
+        }
+
+        public void add_XML(string filepath)
+        {
+            XmlDocument addxml_0 = new XmlDocument();
+            addxml_0.Load(filepath);
+            XmlNode rootnode = addxml_0.SelectSingleNode("rootlist");
+
+            XmlElement elem_id = addxml_0.CreateElement("id");
+            elem_id.SetAttribute("id", Convert.ToString(id));
+            rootnode.AppendChild(elem_id);
+
+            XmlElement elem_cluster = addxml_0.CreateElement("Cluster");
+            elem_cluster.SetAttribute("Cluster", Cluster);
+            elem_id.AppendChild(elem_cluster);
+
+            XmlElement elem_block = addxml_0.CreateElement("Block");
+            elem_block.SetAttribute("Block", Block);
+            elem_cluster.AppendChild(elem_block);
+
+            XmlElement elem_module = addxml_0.CreateElement("Module");
+            elem_module.SetAttribute("Module", Module);
+            elem_block.AppendChild(elem_module);
+
+            XmlElement elem_interface = addxml_0.CreateElement("port_interface");
+            elem_interface.SetAttribute("port_interface", port_interface);
+            elem_module.AppendChild(elem_interface);
+
+            XmlElement elem_p_name = addxml_0.CreateElement("port_name");
+            elem_p_name.SetAttribute("port_name", port_name);
+            elem_module.AppendChild(elem_p_name);
+
+            XmlElement elem_p_width = addxml_0.CreateElement("port_width");
+            elem_p_width.SetAttribute("port_width", port_width);
+            elem_module.AppendChild(elem_p_width);
+
+            addxml_0.Save(filepath);
+
+        }
+    }
+}
